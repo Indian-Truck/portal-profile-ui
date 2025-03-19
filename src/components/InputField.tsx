@@ -38,10 +38,11 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({
           ref={ref}
           {...props}
           className={cn(
-            "bg-background/50 border-input/60 focus:border-primary/30 transition-all",
+            "bg-background/50 border-input/60 focus:border-primary/30 transition-all cursor-text",
             icon && "pl-10",
             errorMessage && "border-destructive/50",
-            props.className
+            props.disabled && "cursor-not-allowed opacity-70",
+            className
           )}
         />
       </div>

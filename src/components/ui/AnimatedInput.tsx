@@ -26,8 +26,9 @@ const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(({
         ref={ref}
         {...props}
         className={cn(
-          "pt-6 pb-2 border bg-background/50 transition-all duration-200",
+          "pt-6 pb-2 border bg-background/50 transition-all duration-200 cursor-text",
           errorMessage && "border-destructive/50",
+          props.disabled && "cursor-not-allowed opacity-70",
           className
         )}
         onFocus={(e) => {
