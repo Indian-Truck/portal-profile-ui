@@ -19,17 +19,17 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({
   ...props 
 }, ref) => {
   return (
-    <div className={cn("space-y-2", className)}>
+    <div className={cn("space-y-2 group", className)}>
       <Label 
         htmlFor={props.id || props.name} 
-        className="text-sm font-medium text-foreground/80"
+        className="text-sm font-medium text-foreground/80 group-hover:text-primary/80 transition-colors"
       >
         {label}
       </Label>
       
       <div className="relative animated-border">
         {icon && (
-          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground group-hover:text-primary/70 transition-colors">
             {icon}
           </div>
         )}
@@ -38,7 +38,8 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({
           ref={ref}
           {...props}
           className={cn(
-            "bg-background/50 border-input/60 focus:border-primary/30 transition-all cursor-text",
+            "bg-background/50 border-input/60 focus:border-primary/30 transition-all duration-300 cursor-text rounded-lg",
+            "shadow-sm group-hover:shadow-md",
             icon && "pl-10",
             errorMessage && "border-destructive/50",
             props.disabled && "cursor-not-allowed opacity-70",
@@ -48,7 +49,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({
       </div>
       
       {errorMessage && (
-        <p className="text-xs text-destructive">{errorMessage}</p>
+        <p className="text-xs font-medium text-destructive animate-fade-in">{errorMessage}</p>
       )}
     </div>
   );

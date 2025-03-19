@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -88,13 +89,13 @@
   }
 
   input, select, textarea {
-    @apply focus-visible:ring-1 focus-visible:ring-primary/30 focus-visible:ring-offset-1 focus-visible:outline-none transition-all duration-200;
+    @apply focus-visible:ring-1 focus-visible:ring-primary/30 focus-visible:ring-offset-1 focus-visible:outline-none transition-all duration-300;
   }
 }
 
 @layer components {
   .glass-card {
-    @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-soft hover:shadow-md transition-all duration-300;
+    @apply bg-white/80 backdrop-blur-sm border border-white/20 shadow-soft hover:shadow-md transition-all duration-300 hover:bg-white/90;
   }
   
   .section-heading {
@@ -131,5 +132,25 @@
 
   .clickable {
     @apply cursor-pointer hover:brightness-105 active:brightness-95 transition-all;
+  }
+  
+  .shimmer {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:-translate-x-full before:animate-shimmer before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:translate-y-[-2px] hover:shadow-lg;
+  }
+  
+  .btn-pulse {
+    @apply relative after:absolute after:inset-0 after:rounded-md after:animate-pulse after:bg-primary/10 overflow-hidden;
+  }
+  
+  .gradient-border {
+    @apply relative p-[1px] bg-gradient-to-r from-primary/30 to-primary/10 rounded-lg overflow-hidden;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent;
   }
 }

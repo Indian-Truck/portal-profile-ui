@@ -20,15 +20,17 @@ const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(({
   const hasValue = props.value !== undefined && props.value !== "";
 
   return (
-    <div className="relative">
+    <div className="relative group">
       <Input
         id={id}
         ref={ref}
         {...props}
         className={cn(
-          "pt-6 pb-2 border bg-background/50 transition-all duration-200 cursor-text",
+          "pt-6 pb-2 border bg-background/50 transition-all duration-300 cursor-text rounded-lg",
+          "shadow-sm group-hover:shadow-md",
           errorMessage && "border-destructive/50",
           props.disabled && "cursor-not-allowed opacity-70",
+          isFocused && "border-primary ring-1 ring-primary/30",
           className
         )}
         onFocus={(e) => {
@@ -44,9 +46,9 @@ const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(({
       <Label
         htmlFor={id}
         className={cn(
-          "absolute left-3 transition-all duration-200 pointer-events-none",
+          "absolute left-3 transition-all duration-300 pointer-events-none",
           (isFocused || hasValue) 
-            ? "transform -translate-y-3 text-xs text-primary/80" 
+            ? "transform -translate-y-3 text-xs text-primary/80 font-medium" 
             : "transform translate-y-0 top-1/2 -translate-y-1/2 text-muted-foreground"
         )}
       >
@@ -54,8 +56,14 @@ const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(({
       </Label>
       
       {errorMessage && (
-        <p className="mt-1 text-xs text-destructive">{errorMessage}</p>
+        <p className="mt-1.5 text-xs font-medium text-destructive animate-fade-in">{errorMessage}</p>
       )}
+
+      <div className={cn(
+        "absolute bottom-0 left-0 h-0.5 bg-primary/60 w-0 transition-all duration-300",
+        isFocused ? "w-full" : "w-0",
+        "group-hover:w-1/4"
+      )} />
     </div>
   );
 });
