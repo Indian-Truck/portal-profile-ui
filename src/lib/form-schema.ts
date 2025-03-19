@@ -22,6 +22,33 @@ export const profileFormSchema = z.object({
   
   // Employment
   joiningDate: z.date().optional(),
+  
+  // Preferences (added)
+  language: z.enum(["en-US", "hi-IN", "es-ES", "fr-FR"]).optional().default("en-US"),
+  theme: z.enum(["light", "dark", "system"]).optional().default("system"),
+  notifications: z.object({
+    email: z.boolean().optional().default(true),
+    sms: z.boolean().optional().default(false),
+    browser: z.boolean().optional().default(true),
+  }).optional().default({
+    email: true,
+    sms: false,
+    browser: true,
+  }),
+  privacy: z.object({
+    profileVisibility: z.enum(["everyone", "team", "private"]).optional().default("team"),
+    dataSharing: z.boolean().optional().default(true),
+  }).optional().default({
+    profileVisibility: "team",
+    dataSharing: true,
+  }),
+  security: z.object({
+    twoFactorEnabled: z.boolean().optional().default(false),
+    sessionTimeout: z.enum(["30m", "1h", "4h", "never"]).optional().default("4h"),
+  }).optional().default({
+    twoFactorEnabled: false,
+    sessionTimeout: "4h",
+  }),
 });
 
 export type ProfileFormValues = z.infer<typeof profileFormSchema>;

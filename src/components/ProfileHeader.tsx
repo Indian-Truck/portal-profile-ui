@@ -1,8 +1,12 @@
 
 import { ArrowLeft, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import SettingsDialog from "./SettingsDialog";
 
 const ProfileHeader = () => {
+  const [showSettings, setShowSettings] = useState(false);
+
   return (
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
       <div className="flex items-center gap-3">
@@ -24,10 +28,13 @@ const ProfileHeader = () => {
         variant="outline" 
         size="sm" 
         className="gap-2 text-sm rounded-full px-4 bg-background/80 backdrop-blur-xs"
+        onClick={() => setShowSettings(true)}
       >
         <Settings size={14} />
         <span>Settings</span>
       </Button>
+
+      <SettingsDialog open={showSettings} onOpenChange={setShowSettings} />
     </div>
   );
 };
