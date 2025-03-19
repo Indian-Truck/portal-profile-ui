@@ -1,5 +1,5 @@
 
-import { useState, InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, useState, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,13 +9,13 @@ interface AnimatedInputProps extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string;
 }
 
-const AnimatedInput = ({ 
+const AnimatedInput = forwardRef<HTMLInputElement, AnimatedInputProps>(({ 
   label, 
   errorMessage, 
   className, 
   id,
   ...props 
-}: AnimatedInputProps) => {
+}, ref) => {
   const [isFocused, setIsFocused] = useState(false);
   const hasValue = props.value !== undefined && props.value !== "";
 
@@ -23,6 +23,7 @@ const AnimatedInput = ({
     <div className="relative">
       <Input
         id={id}
+        ref={ref}
         {...props}
         className={cn(
           "pt-6 pb-2 border bg-background/50 transition-all duration-200",
@@ -56,6 +57,9 @@ const AnimatedInput = ({
       )}
     </div>
   );
-};
+});
+
+// Add display name for better debugging
+AnimatedInput.displayName = "AnimatedInput";
 
 export default AnimatedInput;

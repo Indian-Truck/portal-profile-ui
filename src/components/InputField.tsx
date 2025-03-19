@@ -1,5 +1,5 @@
 
-import { InputHTMLAttributes, ReactNode } from "react";
+import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -11,13 +11,13 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 
-const InputField = ({ 
+const InputField = forwardRef<HTMLInputElement, InputFieldProps>(({ 
   label, 
   icon, 
   errorMessage, 
   className, 
   ...props 
-}: InputFieldProps) => {
+}, ref) => {
   return (
     <div className={cn("space-y-2", className)}>
       <Label 
@@ -35,6 +35,7 @@ const InputField = ({
         )}
         
         <Input
+          ref={ref}
           {...props}
           className={cn(
             "bg-background/50 border-input/60 focus:border-primary/30 transition-all",
@@ -50,6 +51,9 @@ const InputField = ({
       )}
     </div>
   );
-};
+});
+
+// Add display name for better debugging
+InputField.displayName = "InputField";
 
 export default InputField;
