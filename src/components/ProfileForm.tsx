@@ -36,6 +36,7 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import FormSection from "./FormSection";
 import InputField from "./InputField";
 import DocumentUpload from "./DocumentUpload";
+import ProfilePicture from "./ProfilePicture";
 import { cn } from "@/lib/utils";
 import { ProfileFormValues, profileFormSchema } from "@/lib/form-schema";
 
@@ -45,6 +46,8 @@ interface ProfileFormProps {
 }
 
 const ProfileForm = ({ onSave, saving }: ProfileFormProps) => {
+  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -64,128 +67,138 @@ const ProfileForm = ({ onSave, saving }: ProfileFormProps) => {
 
   const handleSubmit = (data: ProfileFormValues) => {
     console.log("Form submitted:", data);
+    console.log("Profile picture:", profilePicture);
     onSave();
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-        {/* Personal Information */}
-        <FormSection 
-          title="Personal Information" 
-          icon={<User size={18} />}
-        >
-          <div className="form-grid">
-            <FormField
-              control={form.control}
-              name="fullName"
-              render={({ field }) => (
-                <FormItem>
-                  <InputField 
-                    label="Full Name" 
-                    icon={<User size={16} />} 
-                    placeholder="John Doe" 
-                    {...field} 
-                    errorMessage={form.formState.errors.fullName?.message}
-                  />
-                </FormItem>
-              )}
-            />
-            
-            <FormField
-              control={form.control}
-              name="employeeId"
-              render={({ field }) => (
-                <FormItem>
-                  <InputField 
-                    label="Employee ID" 
-                    icon={<BadgeCheck size={16} />} 
-                    placeholder="EMP123" 
-                    {...field} 
-                    errorMessage={form.formState.errors.employeeId?.message}
-                  />
-                </FormItem>
-              )}
-            />
-            
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <InputField 
-                    label="Email" 
-                    type="email"
-                    icon={<Mail size={16} />} 
-                    placeholder="john.doe@example.com" 
-                    {...field} 
-                    errorMessage={form.formState.errors.email?.message}
-                  />
-                </FormItem>
-              )}
-            />
-            
-            <FormField
-              control={form.control}
-              name="mobileNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <InputField 
-                    label="Mobile Number" 
-                    icon={<Phone size={16} />} 
-                    placeholder="+1 (555) 123-4567" 
-                    {...field} 
-                    errorMessage={form.formState.errors.mobileNumber?.message}
-                  />
-                </FormItem>
-              )}
-            />
-            
-            <FormField
-              control={form.control}
-              name="whatsappNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <InputField 
-                    label="WhatsApp Number (optional)" 
-                    icon={<Phone size={16} />} 
-                    placeholder="+1 (555) 123-4567" 
-                    {...field} 
-                    errorMessage={form.formState.errors.whatsappNumber?.message}
-                  />
-                </FormItem>
-              )}
-            />
-            
-            <FormField
-              control={form.control}
-              name="gender"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm font-medium text-foreground/80">
-                    Gender
-                  </FormLabel>
-                  <Select 
-                    onValueChange={field.onChange} 
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="bg-background/50 border-input/60 transition-all">
-                        <SelectValue placeholder="Select gender" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="male">Male</SelectItem>
-                      <SelectItem value="female">Female</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </FormSection>
+        {/* Profile Picture Section */}
+        <div className="flex flex-col sm:flex-row gap-8 items-center sm:items-start mb-4 animate-fade-in">
+          <ProfilePicture 
+            onChange={setProfilePicture}
+            className="sm:sticky sm:top-24"
+          />
+          
+          {/* Personal Information */}
+          <FormSection 
+            title="Personal Information" 
+            icon={<User size={18} />}
+            className="w-full"
+          >
+            <div className="form-grid">
+              <FormField
+                control={form.control}
+                name="fullName"
+                render={({ field }) => (
+                  <FormItem>
+                    <InputField 
+                      label="Full Name" 
+                      icon={<User size={16} />} 
+                      placeholder="John Doe" 
+                      {...field} 
+                      errorMessage={form.formState.errors.fullName?.message}
+                    />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="employeeId"
+                render={({ field }) => (
+                  <FormItem>
+                    <InputField 
+                      label="Employee ID" 
+                      icon={<BadgeCheck size={16} />} 
+                      placeholder="EMP123" 
+                      {...field} 
+                      errorMessage={form.formState.errors.employeeId?.message}
+                    />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <InputField 
+                      label="Email" 
+                      type="email"
+                      icon={<Mail size={16} />} 
+                      placeholder="john.doe@example.com" 
+                      {...field} 
+                      errorMessage={form.formState.errors.email?.message}
+                    />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="mobileNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <InputField 
+                      label="Mobile Number" 
+                      icon={<Phone size={16} />} 
+                      placeholder="+1 (555) 123-4567" 
+                      {...field} 
+                      errorMessage={form.formState.errors.mobileNumber?.message}
+                    />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="whatsappNumber"
+                render={({ field }) => (
+                  <FormItem>
+                    <InputField 
+                      label="WhatsApp Number (optional)" 
+                      icon={<Phone size={16} />} 
+                      placeholder="+1 (555) 123-4567" 
+                      {...field} 
+                      errorMessage={form.formState.errors.whatsappNumber?.message}
+                    />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-medium text-foreground/80">
+                      Gender
+                    </FormLabel>
+                    <Select 
+                      onValueChange={field.onChange} 
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="bg-background/50 border-input/60 transition-all">
+                          <SelectValue placeholder="Select gender" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="male">Male</SelectItem>
+                        <SelectItem value="female">Female</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </FormSection>
+        </div>
         
         {/* Demographics & Dates */}
         <FormSection 
